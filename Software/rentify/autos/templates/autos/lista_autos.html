@@ -1,0 +1,136 @@
+{% extends "autos/base.html" %}
+
+{% block title %}Lista de Autos{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0 text-primary fw-bold">
+                    <i class="fas fa-car me-2"></i>Lista de Autos
+                </h2>
+                <a href="{% url 'crear_auto' %}" class="btn btn-success btn-lg shadow">
+                    <i class="fas fa-plus me-2"></i>Agregar Auto
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="row g-4">
+        {% for auto in autos %}
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
+                <!-- Availability Badge -->
+                <div class="position-absolute top-0 end-0 m-2" style="z-index: 1;">
+                    {% if auto.availability %}
+                    <span class="badge bg-success rounded-pill">Disponible</span>
+                    {% else %}
+                    <span class="badge bg-danger rounded-pill">No disponible</span>
+                    {% endif %}
+                </div>
+
+                <!-- Car Image -->
+                <div class="position-relative">
+                    {% if auto.image_url %}
+                    <img src="{{ auto.image_url }}" class="card-img-top" alt="{{ auto.brand }} {{ auto.model }}"
+                        style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <img src="https://via.placeholder.com/400x200/e9ecef/6c757d?text=Sin+Imagen" class="card-img-top"
+                        alt="Sin imagen disponible" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="position-absolute bottom-0 start-0 w-100"
+                        style="background: linear-gradient(transparent, rgba(0,0,0,0.7)); height: 60px;"></div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-3 text-dark">
+                        {{ auto.brand }} {{ auto.model }}
+                    </h5>
+
+                    <div class="mb-3 flex-grow-1">
+                        <div class="row g-2 small">
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-calendar-alt text-muted me-2"></i>
+                                    <span class="fw-medium">{{ auto.year }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-dollar-sign text-success me-2"></i>
+                                    <span class="fw-medium">${{ auto.price_per_day }}/día</span>
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-tachometer-alt text-primary me-2"></i>
+                                    <span class="fw-medium">{{ auto.power|default:"N/A" }} HP</span>
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-cogs text-info me-2"></i>
+                                    <span class="fw-medium">{{ auto.system|default:"N/A" }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-users text-warning me-2"></i>
+                                    <span class="fw-medium">{{ auto.accompanists|default:"N/A" }} personas</span>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                                    <span class="text-muted small">{{ auto.location }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer with Actions -->
+                <div class="card-footer bg-white border-0 pt-0">
+                    <div class="btn-group w-100" role="group">
+                        <a href="{% url 'detalle_auto' auto.id %}" class="btn btn-outline-info btn-sm flex-fill">
+                            <i class="fas fa-eye me-1"></i>Ver
+                        </a>
+                        <a href="{% url 'editar_auto' auto.id %}" class="btn btn-outline-warning btn-sm flex-fill">
+                            <i class="fas fa-edit me-1"></i>Editar
+                        </a>
+                        <a href="{% url 'eliminar_auto' auto.id %}" class="btn btn-outline-danger btn-sm flex-fill"
+                            onclick="return confirm('¿Estás seguro de eliminar este auto?')">
+                            <i class="fas fa-trash me-1"></i>Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fas fa-car-side fa-4x text-muted"></i>
+                </div>
+                <div class="alert alert-light border shadow-sm d-inline-block">
+                    <h5 class="alert-heading mb-2">No hay autos disponibles</h5>
+                    <p class="mb-0 text-muted">
+                        Comienza agregando tu primer auto a la lista
+                    </p>
+                    <hr>
+                    <a href="{% url 'crear_auto' %}" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus me-1"></i>Agregar Primer Auto
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

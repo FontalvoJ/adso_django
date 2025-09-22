@@ -1,0 +1,13 @@
+{% extends "autos/base.html" %}
+
+{% block title %}Editar Auto{% endblock %}
+
+{% block content %}
+<h2>Editar Auto</h2>
+<form method="post" enctype="multipart/form-data" class="mt-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-warning">Actualizar</button>
+    <a href="{% url 'lista_autos' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

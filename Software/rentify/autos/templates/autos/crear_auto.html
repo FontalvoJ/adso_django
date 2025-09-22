@@ -1,0 +1,199 @@
+{% extends "autos/base.html" %}
+
+{% block title %}Agregar Auto{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0 text-dark fw-bold">
+                    <i class="fas fa-plus-circle me-2 text-success"></i>Agregar Auto
+                </h2>
+                <a href="{% url 'lista_autos' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="card-title mb-0 text-dark">
+                        <i class="fas fa-car me-2 text-primary"></i>Información del Auto
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="row g-4">
+                            <!-- Información Básica -->
+
+                            <div class="col-md-6">
+                                <label for="{{ form.brand.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-tag text-primary me-2"></i>Marca
+                                </label>
+                                {{ form.brand }}
+                                {% if form.brand.errors %}
+                                <div class="text-danger small mt-1">{{ form.brand.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.model.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-car text-primary me-2"></i>Modelo
+                                </label>
+                                {{ form.model }}
+                                {% if form.model.errors %}
+                                <div class="text-danger small mt-1">{{ form.model.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.year.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-calendar-alt text-info me-2"></i>Año
+                                </label>
+                                {{ form.year }}
+                                {% if form.year.errors %}
+                                <div class="text-danger small mt-1">{{ form.year.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.price_per_day.id_for_label }}"
+                                    class="form-label fw-medium text-dark">
+                                    <i class="fas fa-dollar-sign text-success me-2"></i>Precio por Día
+                                </label>
+                                {{ form.price_per_day }}
+                                {% if form.price_per_day.errors %}
+                                <div class="text-danger small mt-1">{{ form.price_per_day.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Especificaciones Técnicas -->
+
+                            <div class="col-md-6">
+                                <label for="{{ form.power.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-tachometer-alt text-primary me-2"></i>Potencia (HP)
+                                </label>
+                                {{ form.power }}
+                                {% if form.power.errors %}
+                                <div class="text-danger small mt-1">{{ form.power.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.system.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-cogs text-info me-2"></i>Sistema
+                                </label>
+                                {{ form.system }}
+                                {% if form.system.errors %}
+                                <div class="text-danger small mt-1">{{ form.system.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.accompanists.id_for_label }}"
+                                    class="form-label fw-medium text-dark">
+                                    <i class="fas fa-users text-warning me-2"></i>Acompañantes
+                                </label>
+                                {{ form.accompanists }}
+                                {% if form.accompanists.errors %}
+                                <div class="text-danger small mt-1">{{ form.accompanists.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="{{ form.color.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-palette text-secondary me-2"></i>Color
+                                </label>
+                                {{ form.color }}
+                                {% if form.color.errors %}
+                                <div class="text-danger small mt-1">{{ form.color.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Ubicación y Disponibilidad -->
+
+
+                            <div class="col-md-8">
+                                <label for="{{ form.location.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>Ubicación
+                                </label>
+                                {{ form.location }}
+                                {% if form.location.errors %}
+                                <div class="text-danger small mt-1">{{ form.location.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="{{ form.availability.id_for_label }}"
+                                    class="form-label fw-medium text-dark">
+                                    <i class="fas fa-check-circle text-success me-2"></i>Disponible
+                                </label>
+                                <div class="form-check form-switch mt-2">
+                                    {{ form.availability }}
+                                </div>
+                                {% if form.availability.errors %}
+                                <div class="text-danger small mt-1">{{ form.availability.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Imagen -->
+
+                            <div class="col-12">
+                                <label for="{{ form.image_url.id_for_label }}" class="form-label fw-medium text-dark">
+                                    <i class="fas fa-link text-info me-2"></i>URL de la Imagen
+                                </label>
+                                {{ form.image_url }}
+                                <div class="form-text text-muted">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Introduce la URL de una imagen del auto (opcional)
+                                </div>
+                                {% if form.image_url.errors %}
+                                <div class="text-danger small mt-1">{{ form.image_url.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Card Footer with Actions -->
+                <div class="card-footer bg-light border-top d-flex justify-content-between">
+                    <a href="{% url 'lista_autos' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </a>
+                    <button type="submit" form="auto-form" class="btn btn-success btn-lg px-4">
+                        <i class="fas fa-save me-2"></i>Guardar Auto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Añadir clases de Bootstrap a los campos del formulario
+    document.addEventListener('DOMContentLoaded', function () {
+        // Agregar clases form-control a los inputs
+        const inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="url"], textarea, select');
+        inputs.forEach(function (input) {
+            input.classList.add('form-control');
+        });
+
+        // Manejar el checkbox de disponibilidad
+        const availabilityCheckbox = document.querySelector('input[type="checkbox"]');
+        if (availabilityCheckbox) {
+            availabilityCheckbox.classList.add('form-check-input');
+        }
+    });
+
+    // Añadir ID al formulario para el botón submit
+    document.querySelector('form').id = 'auto-form';
+</script>
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends "autos/base.html" %}
+
+{% block title %}Detalle del Auto{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-0 text-primary fw-bold">
+                    <i class="fas fa-car me-2"></i>Detalle del Auto
+                </h2>
+                <a href="{% url 'lista_autos' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Volver a la Lista
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+            <div class="card shadow-sm border-0">
+                <!-- Car Image Header -->
+                <div class="position-relative">
+                    {% if auto.image_url %}
+                    <img src="{{ auto.image_url }}" class="card-img-top" alt="{{ auto.brand }} {{ auto.model }}"
+                        style="height: 300px; object-fit: cover;">
+                    {% else %}
+                    <img src="https://via.placeholder.com/800x300/e9ecef/6c757d?text=Sin+Imagen+Disponible"
+                        class="card-img-top" alt="Sin imagen disponible" style="height: 300px; object-fit: cover;">
+                    {% endif %}
+
+                    <!-- Availability Badge -->
+                    <div class="position-absolute top-0 end-0 m-3" style="z-index: 1;">
+                        {% if auto.availability %}
+                        <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">
+                            <i class="fas fa-check-circle me-1"></i>Disponible
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill">
+                            <i class="fas fa-times-circle me-1"></i>No disponible
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Car Title Overlay -->
+                    <div class="position-absolute bottom-0 start-0 w-100 text-white p-4"
+                        style="background: linear-gradient(transparent, rgba(0,0,0,0.8));">
+                        <h1 class="fw-bold mb-0">{{ auto.brand }} {{ auto.model }}</h1>
+                        <p class="mb-0 fs-5">{{ auto.year }}</p>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Information Sections -->
+                    <div class="row g-4">
+                        <!-- Basic Information -->
+                        <div class="col-md-6">
+                            <div class="card bg-light border-0">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary mb-3">
+                                        <i class="fas fa-info-circle me-2"></i>Información Básica
+                                    </h5>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-tag text-muted me-3 fa-fw"></i>
+                                        <div>
+                                            <small class="text-muted d-block">Marca</small>
+                                            <span class="fw-medium">{{ auto.brand }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-car text-muted me-3 fa-fw"></i>
+                                        <div>
+                                            <small class="text-muted d-block">Modelo</small>
+                                            <span class="fw-medium">{{ auto.model }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-calendar-alt text-muted me-3 fa-fw"></i>
+                                        <div>
+                                            <small class="text-muted d-block">Año</small>
+                                            <span class="fw-medium">{{ auto.year }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-palette text-muted me-3 fa-fw"></i>
+                                        <div>
+                                            <small class="text-muted d-block">Color</small>
+                                            <span class="fw-medium">{{ auto.color|default:"No especificado" }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Technical Specifications -->
+                        <div class="col-md-6">
+                            <div class="card bg-light border-0">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary mb-3">
+                                        <i class="fas fa-cogs me-2"></i>Especificaciones Técnicas
+                                    </h5>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-tachometer-alt text-muted me-3 fa-fw"></i>
+                                        <div>
+                                            <small class="text-muted d-block">Potencia</small>
+                                            <span class="fw-medium">{{ auto.power|default:"No especificado" }} HP</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-cogs text-muted me-3 fa-fw"></i>
+                                        <div>
+                                            <small class="text-muted d-block">Sistema</small>
+                                            <span class="fw-medium">{{ auto.system|default:"No especificado" }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-users text-muted me-3 fa-fw"></i>
+                                        <div>
+                                            <small class="text-muted d-block">Capacidad</small>
+                                            <span class="fw-medium">{{ auto.accompanists|default:"No especificado" }}
+                                                personas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Location and Price -->
+                        <div class="col-12">
+                            <div class="card bg-light border-0">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary mb-3">
+                                        <i class="fas fa-map-marker-alt me-2"></i>Ubicación y Precio
+                                    </h5>
+
+                                    <div class="row g-3">
+                                        <div class="col-md-8">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-map-marker-alt text-danger me-3 fa-fw fa-lg"></i>
+                                                <div>
+                                                    <small class="text-muted d-block">Ubicación</small>
+                                                    <span class="fw-medium fs-5">{{ auto.location }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons Footer -->
+                <div class="card-footer bg-white border-0 p-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'editar_auto' auto.id %}" class="btn btn-warning">
+                                <i class="fas fa-edit me-2"></i>Editar Auto
+                            </a>
+                            <a href="{% url 'eliminar_auto' auto.id %}" class="btn btn-danger"
+                                onclick="return confirm('¿Estás seguro de eliminar este auto?')">
+                                <i class="fas fa-trash me-2"></i>Eliminar Auto
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
